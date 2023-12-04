@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import React from 'react';
-import {library} from '@fortawesome/fontawesome-svg-core';
+import {library, IconProp} from '@fortawesome/fontawesome-svg-core';
 
 import {
   faCoins,
@@ -18,8 +18,17 @@ library.add(
   faMobileAndroid,
   faArrowRotateLeft,
 );
-export default function EventSection() {
-  const EventData = [
+interface EventSectionItem {
+  id: string;
+  name: string;
+  icon: IconProp;
+  color: string;
+}
+interface ItemProps {
+  item: EventSectionItem;
+}
+const EventSection: React.FC = () => {
+  const EventData: EventSectionItem[] = [
     {
       id: '1',
       name: 'SuperCoin',
@@ -41,7 +50,7 @@ export default function EventSection() {
     },
     {id: '5', name: 'Spoyl', icon: faArrowRotateLeft, color: '#66cc00'},
   ];
-  const Items = ({item}) => {
+  const Items: React.FC<ItemProps> = ({item}) => {
     const {name, icon, color} = item;
     return (
       <View style={{marginRight: 10}}>
@@ -64,7 +73,7 @@ export default function EventSection() {
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -84,3 +93,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+export default EventSection;

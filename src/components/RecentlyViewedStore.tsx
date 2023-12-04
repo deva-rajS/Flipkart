@@ -1,8 +1,15 @@
 import {View, Text, StyleSheet, Image, FlatList} from 'react-native';
 import React from 'react';
-
-export default function RecentyViewedStore() {
-  const RecentData = [
+interface RecentlyViewedStoreItem {
+  id: string;
+  url: string;
+  title: string;
+}
+interface ItemProps {
+  item: RecentlyViewedStoreItem;
+}
+const RecentlyViewedStore: React.FC = () => {
+  const RecentData: RecentlyViewedStoreItem[] = [
     {
       id: '1',
       url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/mobile/2/m/o/edge-40-pay40030in-motorola-original-imagpqzchzhg6fex.jpeg?q=70',
@@ -30,7 +37,7 @@ export default function RecentyViewedStore() {
     },
   ];
 
-  const Items = ({item}) => {
+  const Items: React.FC<ItemProps> = ({item}) => {
     const {url, title} = item;
     return (
       <View style={styles.itemContainer}>
@@ -51,7 +58,7 @@ export default function RecentyViewedStore() {
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {flex: 1, marginHorizontal: 15, marginBottom: 20},
   itemContainer: {
@@ -81,3 +88,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+export default RecentlyViewedStore;

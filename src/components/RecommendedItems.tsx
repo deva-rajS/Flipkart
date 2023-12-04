@@ -7,8 +7,19 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 library.add(faCircleChevronRight);
 
-export default function RecommendedItems() {
-  const RecentData = [
+interface RecommentItemsData {
+  id: string;
+  url: string;
+  prize: string;
+  title: string;
+  subTitle: string;
+}
+interface ItemProps {
+  item: RecommentItemsData;
+}
+
+const RecommendedItems: React.FC = () => {
+  const RecentData: RecommentItemsData[] = [
     {
       id: '1',
       url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/cases-covers/back-cover/m/c/7/time-vv-v29-5g-bommscvr-2-asvalbuy-original-imagtrdhymhedsxd.jpeg?q=70',
@@ -46,7 +57,7 @@ export default function RecommendedItems() {
     },
   ];
 
-  const Items = ({item}) => {
+  const Items: React.FC<ItemProps> = ({item}) => {
     const {url, title, prize, subTitle} = item;
     return (
       <View style={styles.itemContainer}>
@@ -75,7 +86,7 @@ export default function RecommendedItems() {
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -125,3 +136,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+export default RecommendedItems;

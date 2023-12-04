@@ -1,9 +1,19 @@
 import {View, Text, Image, StyleSheet, FlatList} from 'react-native';
 import React, {useState} from 'react';
 
-export default function MainContentCategories() {
+interface MainCategoriesDataItem {
+  id: string;
+  url: string;
+  title: string;
+}
+interface ItemProps {
+  item: MainCategoriesDataItem;
+}
+
+const MainContentCategories: React.FC = () => {
   // const [itemsTitle, setItemsTitle] = useState('Grocery');
-  const MainCategoriesData = [
+
+  const MainCategoriesData: MainCategoriesDataItem[] = [
     {
       id: '1',
       url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/flour/j/n/v/-original-imagm7w8jfn29hp2.jpeg?q=70',
@@ -35,7 +45,7 @@ export default function MainContentCategories() {
       title: 'Dry Fruits',
     },
   ];
-  const Items = ({item}) => {
+  const Items: React.FC<ItemProps> = ({item}) => {
     const {url, title} = item;
     return (
       <View>
@@ -68,7 +78,7 @@ export default function MainContentCategories() {
       </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 3,
@@ -120,3 +130,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
+
+export default MainContentCategories;

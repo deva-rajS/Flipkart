@@ -8,11 +8,14 @@ import {
 import React from 'react';
 import AdSlider from '../components/AdSlider';
 import EventSection from '../components/EventSection';
-import RecentyViewedStore from '../components/RecentyViewedStore';
+import RecentyViewedStore from '../components/RecentlyViewedStore';
 import RecommendedItems from '../components/RecommendedItems';
 import BestOfElectronics from '../components/BestOfElectronics';
-
-export default function HomeScreen({route, navigation}) {
+interface HomeScreenProps {
+  route: any;
+  navigation: any;
+}
+const HomeScreen: React.FC<HomeScreenProps> = ({route, navigation}) => {
   return (
     <ScrollView style={styles.container}>
       <AdSlider />
@@ -22,8 +25,10 @@ export default function HomeScreen({route, navigation}) {
       <BestOfElectronics />
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {flex: 1},
 });
+
+export default HomeScreen;

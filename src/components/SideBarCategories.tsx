@@ -1,8 +1,17 @@
 import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
 import React from 'react';
 
-export default function SideBarCategories() {
-  const SideBarData = [
+interface SideBarCategoriesItem {
+  id: string;
+  url: string;
+  title: string;
+}
+interface ItemProps {
+  item: SideBarCategoriesItem;
+}
+
+const SideBarCategories: React.FC = () => {
+  const SideBarData: SideBarCategoriesItem[] = [
     {
       id: '1',
       url: 'https://rukminim1.flixcart.com/flap/96/96/image/29327f40e9c4d26b.png?q=100',
@@ -45,7 +54,7 @@ export default function SideBarCategories() {
     },
   ];
 
-  const Items = ({item}) => {
+  const Items: React.FC<ItemProps> = ({item}) => {
     const {url, title} = item;
     return (
       <View style={styles.itemContainer}>
@@ -65,7 +74,7 @@ export default function SideBarCategories() {
       />
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -101,3 +110,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+export default SideBarCategories;

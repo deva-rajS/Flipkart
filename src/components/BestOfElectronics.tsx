@@ -6,9 +6,18 @@ import {faCircleChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 library.add(faCircleChevronRight);
+interface BestOfElectronicsItem {
+  id: string;
+  url: string;
+  title: string;
+  prize: string;
+}
+interface ItemProps {
+  item: BestOfElectronicsItem;
+}
 
-export default function BestOfElectronics() {
-  const RecentData = [
+const BestOfElectronics: React.FC = () => {
+  const RecentData: BestOfElectronicsItem[] = [
     {
       id: '1',
       url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/headphone/p/r/z/enco-buds-2-oppo-original-imagh9frfp7gxdb3.jpeg?q=70',
@@ -35,8 +44,8 @@ export default function BestOfElectronics() {
     },
   ];
 
-  const Items = ({item}) => {
-    const {url, title, prize, subTitle} = item;
+  const Items: React.FC<ItemProps> = ({item}) => {
+    const {url, title, prize} = item;
     return (
       <View style={styles.itemContainer}>
         <Image source={{uri: url}} style={styles.img} />
@@ -61,7 +70,7 @@ export default function BestOfElectronics() {
       </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -112,3 +121,4 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
 });
+export default BestOfElectronics;
