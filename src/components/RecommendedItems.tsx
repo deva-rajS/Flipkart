@@ -71,7 +71,7 @@ export default function RecommendedItems() {
         numColumns={3}
         data={RecentData}
         renderItem={({item}) => <Items item={item} />}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
       />
     </View>
   );

@@ -56,7 +56,7 @@ export default function BestOfElectronics() {
           numColumns={2}
           data={RecentData}
           renderItem={({item}) => <Items item={item} />}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.id}
         />
       </View>
     </View>

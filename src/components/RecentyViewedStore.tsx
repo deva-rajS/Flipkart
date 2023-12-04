@@ -47,7 +47,7 @@ export default function RecentyViewedStore() {
         showsHorizontalScrollIndicator={false}
         data={RecentData}
         renderItem={({item}) => <Items item={item} />}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
       />
     </View>
   );
