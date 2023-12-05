@@ -1,6 +1,16 @@
-import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+} from 'react-native';
 import React from 'react';
-
+interface SideBarCategoriesProps {
+  itemId: number;
+  setItemId: React.Dispatch<React.SetStateAction<number>>;
+}
 interface SideBarCategoriesItem {
   id: string;
   url: string;
@@ -8,9 +18,13 @@ interface SideBarCategoriesItem {
 }
 interface ItemProps {
   item: SideBarCategoriesItem;
+  onItemSelected: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SideBarCategories: React.FC = () => {
+const SideBarCategories: React.FC<SideBarCategoriesProps> = ({
+  itemId,
+  setItemId,
+}) => {
   const SideBarData: SideBarCategoriesItem[] = [
     {
       id: '1',
@@ -53,14 +67,18 @@ const SideBarCategories: React.FC = () => {
       title: 'Home & Furniture',
     },
   ];
-
-  const Items: React.FC<ItemProps> = ({item}) => {
+  console.log(itemId);
+  const Items: React.FC<ItemProps> = ({item, onItemSelected}) => {
     const {url, title} = item;
+    const setItem = () => onItemSelected(Number(item.id));
+
     return (
-      <View style={styles.itemContainer}>
-        <Image source={{uri: url}} style={styles.img} />
-        <Text style={styles.itemTxt}>{title}</Text>
-      </View>
+      <TouchableHighlight onPress={setItem}>
+        <View style={styles.itemContainer}>
+          <Image source={{uri: url}} style={styles.img} />
+          <Text style={styles.itemTxt}>{title}</Text>
+        </View>
+      </TouchableHighlight>
     );
   };
 
@@ -69,7 +87,9 @@ const SideBarCategories: React.FC = () => {
       <FlatList
         data={SideBarData}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => <Items item={item} />}
+        renderItem={({item}) => (
+          <Items item={item} onItemSelected={setItemId} />
+        )}
         keyExtractor={item => item.id}
       />
     </View>

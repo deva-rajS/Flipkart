@@ -50,7 +50,7 @@ const RecentlyViewedStore: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.titleText}>Recently Viewed Stores</Text>
       <FlatList
-        horizontal={true}
+        horizontal
         showsHorizontalScrollIndicator={false}
         data={RecentData}
         renderItem={({item}) => <Items item={item} />}

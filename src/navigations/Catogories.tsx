@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import SideBarCategories from '../components/SideBarCategories';
 import MainContentCategories from '../components/MainContentCategories';
 
@@ -8,10 +8,11 @@ interface CategoriesProps {
   navigation: any;
 }
 const Catogories: React.FC<CategoriesProps> = ({route, navigation}) => {
+  const [itemId, setItemId] = useState(2);
   return (
     <View style={styles.container}>
-      <SideBarCategories />
-      <MainContentCategories />
+      <SideBarCategories itemId={itemId} setItemId={setItemId} />
+      <MainContentCategories itemId={itemId} />
     </View>
   );
 };

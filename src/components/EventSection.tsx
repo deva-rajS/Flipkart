@@ -64,7 +64,7 @@ const EventSection: React.FC = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        horizontal={true}
+        horizontal
         scrollEnabled={false}
         showsHorizontalScrollIndicator={false}
         data={EventData}

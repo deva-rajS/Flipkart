@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/navigations/HomeScreen';
@@ -89,7 +89,7 @@ export default function App() {
       <Tab.Navigator
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {
-            let iconName;
+            let iconName = faHouse;
 
             if (route.name === 'Home') {
               iconName = faHouse;
