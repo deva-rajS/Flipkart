@@ -1,9 +1,17 @@
-import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
-
+import {scale, verticalScale} from 'react-native-size-matters';
 import {faCircleChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import AppText from '../text/AppText';
 
 library.add(faCircleChevronRight);
 interface BestOfElectronicsItem {
@@ -17,29 +25,31 @@ interface ItemProps {
 }
 
 const BestOfElectronics: React.FC = () => {
+  const {width} = Dimensions.get('window');
+
   const RecentData: BestOfElectronicsItem[] = [
     {
       id: '1',
       url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/headphone/p/r/z/enco-buds-2-oppo-original-imagh9frfp7gxdb3.jpeg?q=70',
-      title: 'Mobiles',
+      title: 'True Wireless',
       prize: 'From ₹799',
     },
     {
       id: '2',
       url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/computer/8/e/m/-original-imagqf3a3j6ebxzc.jpeg?q=70',
-      title: 'True Wireless',
+      title: 'Laptops',
       prize: 'From ₹46,990',
     },
     {
       id: '3',
       url: 'https://rukminim2.flixcart.com/image/832/832/kp1imq80/mouse/7/n/t/g502-hero-logitech-original-imag3d4qhpdjr9tj.jpeg?q=70',
-      title: 'Laptops',
+      title: 'Accessories',
       prize: 'From ₹1,109',
     },
     {
       id: '4',
       url: 'https://rukminim2.flixcart.com/image/832/832/knyxqq80/dslr-camera/r/y/x/digital-camera-eos-m50-mark-ii-eos-m50-mark-ii-canon-original-imag2gzkexzqhyhu.jpeg?q=70',
-      title: 'Smart Watches',
+      title: 'DSLR',
       prize: 'Shop Now!',
     },
   ];
@@ -48,16 +58,22 @@ const BestOfElectronics: React.FC = () => {
     const {url, title, prize} = item;
     return (
       <View style={styles.itemContainer}>
-        <Image source={{uri: url}} style={styles.img} />
-        <Text style={styles.itemTxt}>{title}</Text>
-        <Text style={styles.itemPrize}>{prize}</Text>
+        <Image
+          source={{uri: url}}
+          style={[
+            styles.img,
+            {width: scale(width / 2 - 55), height: verticalScale(150)},
+          ]}
+        />
+        <AppText style={styles.itemTxt}>{title}</AppText>
+        <AppText style={styles.itemPrize}>{prize}</AppText>
       </View>
     );
   };
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Best of Electronics</Text>
+        <AppText style={styles.titleText}>Best of Electronics</AppText>
         <FontAwesomeIcon icon={faCircleChevronRight} size={24} color="white" />
       </View>
       <View style={styles.flatlistContainer}>
@@ -84,8 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   itemContainer: {
-    marginHorizontal: 5,
-    marginVertical: 5,
+    margin: 5,
     backgroundColor: 'white',
     borderBlockColor: 'gray',
     borderWidth: 0.1,
@@ -93,11 +108,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   img: {
-    width: 160,
-    height: 200,
     resizeMode: 'contain',
-    marginHorizontal: 10,
-    marginTop: 5,
+    margin: 5,
   },
   itemTxt: {
     color: 'black',
@@ -118,7 +130,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   flatlistContainer: {
-    marginHorizontal: 15,
+    alignSelf: 'center',
   },
 });
 export default BestOfElectronics;

@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import React from 'react';
+import AppText from '../text/AppText';
 interface SideBarCategoriesProps {
   itemId: number;
   setItemId: React.Dispatch<React.SetStateAction<number>>;
@@ -67,7 +68,6 @@ const SideBarCategories: React.FC<SideBarCategoriesProps> = ({
       title: 'Home & Furniture',
     },
   ];
-  console.log(itemId);
   const Items: React.FC<ItemProps> = ({item, onItemSelected}) => {
     const {url, title} = item;
     const setItem = () => onItemSelected(Number(item.id));
@@ -76,7 +76,7 @@ const SideBarCategories: React.FC<SideBarCategoriesProps> = ({
       <TouchableHighlight onPress={setItem}>
         <View style={styles.itemContainer}>
           <Image source={{uri: url}} style={styles.img} />
-          <Text style={styles.itemTxt}>{title}</Text>
+          <AppText style={styles.itemTxt}>{title}</AppText>
         </View>
       </TouchableHighlight>
     );

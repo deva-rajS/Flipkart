@@ -1,5 +1,14 @@
-import {View, Text, StyleSheet, Image, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
+import AppText from '../text/AppText';
+import {scale, verticalScale} from 'react-native-size-matters';
 interface RecentlyViewedStoreItem {
   id: string;
   url: string;
@@ -9,6 +18,7 @@ interface ItemProps {
   item: RecentlyViewedStoreItem;
 }
 const RecentlyViewedStore: React.FC = () => {
+  const {width} = Dimensions.get('window');
   const RecentData: RecentlyViewedStoreItem[] = [
     {
       id: '1',
@@ -41,26 +51,39 @@ const RecentlyViewedStore: React.FC = () => {
     const {url, title} = item;
     return (
       <View style={styles.itemContainer}>
-        <Image source={{uri: url}} style={styles.img} />
-        <Text style={styles.itexText}>{title}</Text>
+        <Image
+          source={{uri: url}}
+          style={[
+            styles.img,
+            {width: scale(width / 3 - 50), height: verticalScale(130)},
+          ]}
+        />
+        <AppText style={styles.itexText}>{title}</AppText>
       </View>
     );
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Recently Viewed Stores</Text>
+      <AppText style={styles.titleText}>Recently Viewed Stores</AppText>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={RecentData}
         renderItem={({item}) => <Items item={item} />}
         keyExtractor={item => item.id}
+        style={styles.flatlistContainer}
       />
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {flex: 1, marginHorizontal: 15, marginBottom: 20},
+  container: {
+    flex: 1,
+    marginBottom: 20,
+  },
+  flatlistContainer: {
+    marginHorizontal: 10,
+  },
   itemContainer: {
     marginHorizontal: 5,
     backgroundColor: 'white',
@@ -70,8 +93,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   img: {
-    width: 100,
-    height: 150,
+    // width: 100,
+    // height: 150,
     resizeMode: 'contain',
     marginHorizontal: 10,
   },
@@ -82,10 +105,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   titleText: {
+    marginHorizontal: 15,
     color: 'black',
     fontWeight: '500',
     fontSize: 20,
     marginBottom: 10,
+    // fontFamily: 'Poppins-Italic',
   },
 });
 export default RecentlyViewedStore;

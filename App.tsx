@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/navigations/HomeScreen';
@@ -22,6 +22,7 @@ import Catogories from './src/navigations/Catogories';
 import Notifications from './src/navigations/Notifications';
 import Account from './src/navigations/Account';
 import Cart from './src/navigations/Cart';
+import AppText from './src/text/AppText';
 
 library.add(
   faSearch,
@@ -34,12 +35,17 @@ library.add(
 );
 
 export default function App() {
-  const toggleSwitch = () => {
-    setToggle(!toggle);
-  };
   const [toggle, setToggle] = useState(false);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
+
+  useEffect(() => {
+    Text.defaultProps = Text.defaultProps || {}; // check if defaultProps is defined first
+    Text.defaultProps.style = {fontFamily: 'Poppins-Medium'};
+  }, []);
+  const toggleSwitch = () => {
+    setToggle(!toggle);
+  };
   return (
     <NavigationContainer>
       {/* <Stack.Navigator initialRouteName="Home">
@@ -90,25 +96,45 @@ export default function App() {
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {
             let iconName = faHouse;
-
+            let label = 'Home';
             if (route.name === 'Home') {
+              label = 'Home';
               iconName = faHouse;
             } else if (route.name === 'Categories') {
+              label = 'Categories';
               iconName = faList;
             } else if (route.name === 'Notifications') {
+              label = 'Notifications';
               iconName = faBell;
             } else if (route.name === 'Account') {
+              label = 'Account';
               iconName = faUser;
             } else if (route.name === 'Cart') {
+              label = 'Cart';
               iconName = faCartShopping;
             }
             return (
-              <FontAwesomeIcon icon={iconName} size={size} color={color} />
+              <View style={styles.bottomTabBarContainer}>
+                <FontAwesomeIcon
+                  icon={iconName}
+                  size={size}
+                  color={color}
+                  style={styles.icon}
+                />
+                <AppText style={[{color}, styles.bottomNavText]}>
+                  {label}
+                </AppText>
+              </View>
             );
           },
+
+          tabBarShowLabel: false,
           tabBarActiveTintColor: '#1582E8',
           tabBarInactiveTintColor: 'darkgray',
-          tabBarContainerStyle: {backgroundColor: 'blue'},
+          tabBarStyle: {
+            backgroundColor: 'white',
+            height: 80,
+          },
         })}>
         <Tab.Screen
           name="Home"
@@ -175,20 +201,24 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     marginRight: 10,
-    marginVertical: 10,
+    marginVertical: 5,
+  },
+  bottomTabBarContainer: {
+    paddingBottom: 20,
+    alignContent: 'flex-start',
   },
   toggleButton: {
     paddingHorizontal: 10,
   },
   searchBar: {
-    flex: 4,
+    flex: 3,
     flexDirection: 'row',
     gap: 15,
     marginLeft: 10,
     backgroundColor: '#f0f0f0',
     borderColor: 'gray',
     padding: 5,
-    borderWidth: 0.2,
+    borderWidth: 0.3,
     borderRadius: 3,
     alignItems: 'center',
     paddingHorizontal: 15,
@@ -199,5 +229,11 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     marginRight: 15,
+  },
+  bottomNavText: {
+    fontSize: 12,
+  },
+  icon: {
+    alignSelf: 'center',
   },
 });

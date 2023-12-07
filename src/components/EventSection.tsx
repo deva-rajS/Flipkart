@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Dimensions} from 'react-native';
 import React from 'react';
 import {library, IconProp} from '@fortawesome/fontawesome-svg-core';
 
@@ -10,6 +10,7 @@ import {
   faArrowRotateLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import AppText from '../text/AppText';
 
 library.add(
   faCoins,
@@ -28,6 +29,7 @@ interface ItemProps {
   item: EventSectionItem;
 }
 const EventSection: React.FC = () => {
+  const {width} = Dimensions.get('window');
   const EventData: EventSectionItem[] = [
     {
       id: '1',
@@ -52,12 +54,20 @@ const EventSection: React.FC = () => {
   ];
   const Items: React.FC<ItemProps> = ({item}) => {
     const {name, icon, color} = item;
+    const words = name.split(' ');
     return (
-      <View style={{marginRight: 10}}>
-        <View style={styles.itemContainer}>
-          <FontAwesomeIcon icon={icon} color={color} size={34} />
-          <Text style={styles.txt}>{name}</Text>
-        </View>
+      <View style={styles.itemContainer}>
+        <FontAwesomeIcon
+          icon={icon}
+          color={color}
+          size={34}
+          style={styles.icon}
+        />
+        {words.map((word, index) => (
+          <AppText key={index} style={styles.txt}>
+            {word}
+          </AppText>
+        ))}
       </View>
     );
   };
@@ -65,6 +75,11 @@ const EventSection: React.FC = () => {
     <View style={styles.container}>
       <FlatList
         horizontal
+        contentContainerStyle={[
+          styles.flatlistContainer,
+          ,
+          {width: width - 30},
+        ]}
         scrollEnabled={false}
         showsHorizontalScrollIndicator={false}
         data={EventData}
@@ -83,14 +98,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   txt: {
-    fontWeight: '500',
+    fontWeight: '600',
     color: 'black',
     textAlign: 'center',
+    fontSize: 13,
+    lineHeight: 15,
   },
   itemContainer: {
-    // columnGap: 10,
-    width: 70,
     alignItems: 'center',
+  },
+  flatlistContainer: {
+    justifyContent: 'space-between',
+  },
+  icon: {
+    marginBottom: 5,
   },
 });
 export default EventSection;

@@ -1,9 +1,18 @@
-import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
-
+import {scale, verticalScale} from 'react-native-size-matters';
 import {faCircleChevronRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import AppText from '../text/AppText';
+import AppTextLight from '../text/AppTextLight';
 
 library.add(faCircleChevronRight);
 
@@ -19,6 +28,7 @@ interface ItemProps {
 }
 
 const RecommendedItems: React.FC = () => {
+  const {width} = Dimensions.get('window');
   const RecentData: RecommentItemsData[] = [
     {
       id: '1',
@@ -61,17 +71,23 @@ const RecommendedItems: React.FC = () => {
     const {url, title, prize, subTitle} = item;
     return (
       <View style={styles.itemContainer}>
-        <Image source={{uri: url}} style={styles.img} />
-        <Text style={styles.itemTxt}>{title}</Text>
-        <Text style={styles.itemPrize}>{prize}</Text>
-        <Text style={styles.subTitleText}>{subTitle}</Text>
+        <Image
+          source={{uri: url}}
+          style={[
+            styles.img,
+            {width: scale(width / 3 - 42.5), height: verticalScale(150)},
+          ]}
+        />
+        <AppTextLight style={styles.itemTxt}>{title}</AppTextLight>
+        <AppText style={styles.itemPrize}>{prize}</AppText>
+        <AppText style={styles.subTitleText}>{subTitle}</AppText>
       </View>
     );
   };
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Recommended Items</Text>
+        <AppText style={styles.titleText}>Recommended Items</AppText>
         <FontAwesomeIcon
           icon={faCircleChevronRight}
           size={24}
@@ -83,6 +99,7 @@ const RecommendedItems: React.FC = () => {
         data={RecentData}
         renderItem={({item}) => <Items item={item} />}
         keyExtractor={item => item.id}
+        style={styles.flatlistContainer}
       />
     </View>
   );
@@ -90,12 +107,16 @@ const RecommendedItems: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 15,
     marginBottom: 10,
   },
   titleContainer: {
+    marginHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  flatlistContainer: {
+    // marginHorizontal: 5,
+    alignSelf: 'center',
   },
   itemContainer: {
     margin: 5,
@@ -106,10 +127,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   img: {
-    width: 100,
-    height: 150,
     resizeMode: 'contain',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
   },
   itemTxt: {
     color: 'black',

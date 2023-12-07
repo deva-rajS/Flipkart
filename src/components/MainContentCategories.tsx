@@ -1,5 +1,14 @@
-import {View, Text, Image, StyleSheet, FlatList} from 'react-native';
-import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+} from 'react-native';
+import AppText from '../text/AppText';
+import ImagesData from '../Images/ImagesData';
+import {scale, verticalScale} from 'react-native-size-matters';
 interface MainContentCategoriesProps {
   itemId: number;
 }
@@ -15,86 +24,35 @@ interface ItemProps {
 const MainContentCategories: React.FC<MainContentCategoriesProps> = ({
   itemId,
 }) => {
-  const MainCategoriesData: {id: number; data: MainCategoriesDataItem[]}[] = [
-    {
-      id: 1,
-      data: [
-        {
-          id: '1',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/flour/j/n/v/-original-imagm7w8jfn29hp2.jpeg?q=70',
-          title: 'Atta & Flours',
-        },
-        {
-          id: '2',
-          url: 'https://rukminim2.flixcart.com/image/832/832/knrsjgw0/rice/e/i/n/white-mogra-na-basmati-rice-bag-india-gate-original-imag2dgnr8mqushh.jpeg?q=70',
-          title: 'Rice ',
-        },
-        {
-          id: '3',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/spice-masala/z/j/a/-original-imagu7yb6ff9jeh5.jpeg?q=70',
-          title: 'Masalas',
-        },
-        {
-          id: '4',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/pulses/j/c/u/-original-imagpgzhvykkrq9g.jpeg?q=70',
-          title: 'Dals & Pulses',
-        },
-        {
-          id: '5',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/ghee/v/m/u/-original-imagrmerex5dtfxk.jpeg?q=70',
-          title: 'Ghee & Oils',
-        },
-        {
-          id: '6',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/nut-dry-fruit/v/w/l/-original-imagreprhahkmqrh.jpeg?q=70',
-          title: 'Dry Fruits',
-        },
-      ],
-    },
-    {
-      id: 2,
-      data: [
-        {
-          id: '1',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/flour/j/n/v/-original-imagm7w8jfn29hp2.jpeg?q=70',
-          title: 'Atta & Flours',
-        },
-        {
-          id: '2',
-          url: 'https://rukminim2.flixcart.com/image/832/832/knrsjgw0/rice/e/i/n/white-mogra-na-basmati-rice-bag-india-gate-original-imag2dgnr8mqushh.jpeg?q=70',
-          title: 'Rice ',
-        },
-        {
-          id: '3',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/spice-masala/z/j/a/-original-imagu7yb6ff9jeh5.jpeg?q=70',
-          title: 'Masalas',
-        },
-        {
-          id: '4',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/pulses/j/c/u/-original-imagpgzhvykkrq9g.jpeg?q=70',
-          title: 'Dals & Pulses',
-        },
-        {
-          id: '5',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/ghee/v/m/u/-original-imagrmerex5dtfxk.jpeg?q=70',
-          title: 'Ghee & Oils',
-        },
-        {
-          id: '6',
-          url: 'https://rukminim2.flixcart.com/image/832/832/xif0q/nut-dry-fruit/v/w/l/-original-imagreprhahkmqrh.jpeg?q=70',
-          title: 'Dry Fruits',
-        },
-      ],
-    },
-  ];
+  const {width} = Dimensions.get('window');
+  const MainCategoriesData: {
+    id: number;
+    title: string;
+    subTitle: string;
+    headerImage: string;
+    data: MainCategoriesDataItem[];
+  }[] = ImagesData;
+
   const Items: React.FC<ItemProps> = ({item}) => {
     const {url, title} = item;
     return (
-      <View>
+      <View style={styles.itemContainer}>
         <View style={styles.imgContainer}>
-          <Image source={{uri: url}} style={styles.img} />
+          <Image
+            source={{uri: url}}
+            style={[
+              styles.img,
+              {width: scale(width / 3 - 90), height: verticalScale(50)},
+            ]}
+          />
         </View>
-        <Text style={styles.itemTxt}>{title}</Text>
+        <AppText
+          style={[
+            styles.itemTxt,
+            {width: scale(width / 3 - 60), height: verticalScale(50)},
+          ]}>
+          {title}
+        </AppText>
       </View>
     );
   };
@@ -103,24 +61,38 @@ const MainContentCategories: React.FC<MainContentCategoriesProps> = ({
   );
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>{`Grocery >`}</Text>
-        <Image
-          source={{
-            uri: 'https://rukminim2.flixcart.com/image/832/832/kflftzk0hlty2aw-0/edible-oil/j/a/d/sunlite-refined-pouch-sunflower-oil-fortune-original-imafw33uhwkebr5j.jpeg?q=70',
-          }}
-          style={[styles.img, {marginRight: 20}]}
-        />
-      </View>
-      <View style={styles.listContainer}>
-        <Text style={styles.listTitle}>Staples</Text>
-        <FlatList
-          numColumns={3}
-          data={filteredData?.data}
-          renderItem={({item}) => <Items item={item} />}
-          keyExtractor={item => item.id}
-        />
-      </View>
+      {filteredData ? (
+        <>
+          <View style={styles.titleContainer}>
+            <AppText
+              style={styles.titleText}>{`${filteredData?.title} >`}</AppText>
+            <Image
+              source={{
+                uri: filteredData?.headerImage,
+              }}
+              style={[
+                styles.img,
+                {
+                  marginRight: 20,
+                  width: scale(width / 3 - 60),
+                  height: verticalScale(50),
+                },
+              ]}
+            />
+          </View>
+          <View style={styles.listContainer}>
+            <AppText style={styles.listTitle}>{filteredData?.subTitle}</AppText>
+            <FlatList
+              numColumns={3}
+              data={filteredData?.data}
+              renderItem={({item}) => <Items item={item} />}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        </>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
@@ -129,7 +101,9 @@ const styles = StyleSheet.create({
     flex: 3,
     backgroundColor: 'white',
   },
-
+  itemContainer: {
+    // marginHorizontal: 10,
+  },
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -147,15 +121,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   img: {
-    width: 50,
-    height: 75,
+    // width: 50,
+    // height: 75,
     resizeMode: 'contain',
     marginHorizontal: 10,
   },
   itemTxt: {
-    color: 'gray',
-    alignSelf: 'center',
+    color: 'black',
+    fontSize: 13,
     paddingBottom: 5,
+    flexWrap: 'wrap',
+    textAlign: 'center',
   },
   titleText: {
     color: '#1582E8',

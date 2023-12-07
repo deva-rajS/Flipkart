@@ -8,7 +8,7 @@ interface CategoriesProps {
   navigation: any;
 }
 const Catogories: React.FC<CategoriesProps> = ({route, navigation}) => {
-  const [itemId, setItemId] = useState(2);
+  const [itemId, setItemId] = useState(1);
   return (
     <View style={styles.container}>
       <SideBarCategories itemId={itemId} setItemId={setItemId} />
